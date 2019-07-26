@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>HelloMap</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+    integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+    crossorigin=""></script>
+    <style>
+      html, body, #mapid {padding: 0; margin: 0;height: 100%;width: 100%;}
+    </style>
+  </head>
+  <body>
+    <div id="mapid"></div>
+    <script>
+      L.TileLayer.ArcgisTiledLayer = L.TileLayer.extend({
+      initialize: function (url, options)
+      {
+        L.TileLayer.prototype.initialize.call(this, url + "/tile/{z}/{y}/{x}", options);
+      }
+      });
+
+      L.tileLayer.arcgisTiledLayer = function (url, options) {
+        return new L.TileLayer.ArcgisTiledLayer(url, options);
+      };
+
+     var layer1 = L.tileLayer.arcgisTiledLayer('http://60.16.8.123:8090/iserver/services/map-agscache-TuCeng/arcgisrest/%E5%9B%BE%E5%B1%82/MapServer', {
+    maxZoom: 18,
+    minZoom: 8
+});
+
+var map = L.map("mapid", {
+    center: [84.886,-178.9288],
+    zoom: 8,
+    layers: [layer1],
+    zoomControl: false
+});
+    </script>
+  </body>
+</html>
